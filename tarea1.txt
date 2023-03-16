@@ -1,0 +1,36 @@
+--Instalación de mysql y configuración
+
+sudo apt-get install mysql-server 
+sudo mysql_secure_installation 
+sudo mysql
+
+CREATE DATABASE mydb; 
+CREATE USER 'myuser'@'localhost' IDENTIFIED BY 'secure_password_'; 
+GRANT ALL ON mydb.* to 'myuser'@'localhost'; 
+FLUSH PRIVILEGES; 
+
+use mydb;
+CREATE TABLE prueba_1 (id_prod INT PRIMARY KEY, nombre_prod VARCHAR (20), descripcion VARCHAR (50) );
+show tables;
+insert into prueba_1 values ('10000','arroz','abarrote');
+insert into prueba_1 values ('10001','fideos','abarrote');
+
+select * from prueba_1;
+
+exit
+
+---Crear el script
+
+#!/bin/bash
+nano script.sh
+
+sudo mysql
+use mydb;
+truncate table prueba_1;
+exit
+
+chmod +x script.sh
+
+crontab -e
+
+59 23 * * * /home/ubuntu/script.sh
